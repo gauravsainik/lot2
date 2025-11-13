@@ -1,0 +1,350 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Results - DreamRide Lucky Draw</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=SF+Pro+Display:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+    <style>
+        * { font-family: 'SF Pro Display', -apple-system, BlinkMacSystemFont, sans-serif; }
+        body { background: #000; }
+        .hero-gradient { background: radial-gradient(ellipse at center, #1a1a1a 0%, #000 70%); }
+        .glass { backdrop-filter: blur(20px); background: rgba(255,255,255,0.05); border: 1px solid rgba(255,255,255,0.1); }
+        .premium-glow { box-shadow: 0 0 80px rgba(255,215,0,0.15), 0 0 40px rgba(255,255,255,0.1); }
+        .text-gradient { background: linear-gradient(135deg, #fff 0%, #ffd700 50%, #fff 100%); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
+        .fade-up { animation: fadeUp 1.2s cubic-bezier(0.16, 1, 0.3, 1); }
+        @keyframes fadeUp { from { opacity: 0; transform: translateY(60px); } to { opacity: 1; transform: translateY(0); } }
+        .premium-card { background: linear-gradient(145deg, rgba(26,26,26,0.8) 0%, rgba(0,0,0,0.9) 100%); backdrop-filter: blur(20px); border: 1px solid rgba(255,255,255,0.08); }
+        .gold-accent { color: #ffd700; }
+        .pulse-glow { animation: pulseGlow 2s ease-in-out infinite alternate; }
+        @keyframes pulseGlow { from { box-shadow: 0 0 40px rgba(255,215,0,0.2); } to { box-shadow: 0 0 80px rgba(255,215,0,0.4); } }
+        .float { animation: float 3s ease-in-out infinite; }
+        @keyframes float { 0%, 100% { transform: translateY(0px); } 50% { transform: translateY(-10px); } }
+        .hover-lift { transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1); }
+        .hover-lift:hover { transform: translateY(-8px); }
+    </style>
+</head>
+<body class="text-white min-h-screen">
+    <!-- Navigation -->
+    <nav class="glass border-b border-white/10">
+        <div class="max-w-7xl mx-auto px-6 lg:px-8">
+            <div class="flex justify-between items-center h-20">
+                <a href="index.html" class="text-3xl font-black text-gradient tracking-tight">DreamRide</a>
+                <div class="flex items-center space-x-8">
+                    <a href="index.html" class="text-white/80 hover:text-white transition-all duration-300 font-medium">Home</a>
+                    <a href="fairness.html" class="text-white/80 hover:text-white transition-all duration-300 font-medium">Fairness</a>
+                    <a href="buy.html" class="text-white/80 hover:text-white transition-all duration-300 font-medium">Buy Ticket</a>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Main Content -->
+    <div class="hero-gradient min-h-screen flex items-center justify-center py-32">
+        <div class="max-w-6xl mx-auto px-6 lg:px-8 text-center">
+            
+            <!-- Main Announcement -->
+            <div class="fade-up">
+                <div class="mb-16">
+                    <div class="w-32 h-32 glass premium-glow rounded-full flex items-center justify-center mx-auto mb-12 pulse-glow float">
+                        <svg class="w-16 h-16 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 15v2m-6 4h12a2 2 0 002-2v-6a2 2 0 00-2-2H6a2 2 0 00-2 2v6a2 2 0 002 2zm10-10V7a4 4 0 00-8 0v4h8z"></path>
+                        </svg>
+                    </div>
+                    
+                    <h1 class="text-6xl lg:text-8xl font-black mb-8 text-gradient">
+                        Winner Coming Soon
+                    </h1>
+                    
+                    <p class="text-2xl lg:text-3xl text-white/70 mb-12 max-w-4xl mx-auto font-light leading-relaxed">
+                        The lucky draw is currently in progress. We're preparing to announce the winner of the stunning Harley-Davidson X440!
+                    </p>
+                </div>
+                
+                <!-- Status Cards -->
+                <div class="grid md:grid-cols-3 gap-8 mb-16">
+                    <div class="premium-card rounded-3xl p-8 hover-lift">
+                        <div class="text-4xl font-black text-blue-400 mb-4">1,247</div>
+                        <div class="text-white/60 text-lg font-light">Tickets Sold</div>
+                    </div>
+                    
+                    <div class="premium-card rounded-3xl p-8 hover-lift">
+                        <div class="text-4xl font-black gold-accent mb-4">₹2,79,500</div>
+                        <div class="text-white/60 text-lg font-light">Total Prize Pool</div>
+                    </div>
+                    
+                    <div class="premium-card rounded-3xl p-8 hover-lift">
+                        <div class="text-4xl font-black text-green-400 mb-4">Dec 31</div>
+                        <div class="text-white/60 text-lg font-light">Time Remaining</div>
+                    </div>
+                </div>
+                
+                <!-- Prize Showcase -->
+                <div class="premium-card rounded-3xl p-12 mb-16">
+                    <h2 class="text-4xl font-black mb-8 text-gradient">Grand Prize</h2>
+                    <div class="grid lg:grid-cols-2 gap-12 items-center">
+                        <div>
+                            <div class="premium-glow rounded-3xl overflow-hidden">
+                                <img src="https://images.unsplash.com/photo-1558618666-fcd25c85cd64?w=600&h=400&fit=crop" 
+                                     alt="Harley-Davidson X440" 
+                                     class="w-full h-80 object-cover">
+                            </div>
+                        </div>
+                        <div class="text-left space-y-6">
+                            <h3 class="text-3xl font-black gold-accent">Harley-Davidson X440</h3>
+                            <ul class="space-y-4 text-white/70 text-lg">
+                                <li class="flex items-center">
+                                    <span class="w-3 h-3 gold-accent rounded-full mr-4"></span>
+                                    440cc Single-Cylinder Engine
+                                </li>
+                                <li class="flex items-center">
+                                    <span class="w-3 h-3 gold-accent rounded-full mr-4"></span>
+                                    27 HP Power Output
+                                </li>
+                                <li class="flex items-center">
+                                    <span class="w-3 h-3 gold-accent rounded-full mr-4"></span>
+                                    Choice of 4 Color Variants
+                                </li>
+                                <li class="flex items-center">
+                                    <span class="w-3 h-3 gold-accent rounded-full mr-4"></span>
+                                    Complete Registration & Insurance
+                                </li>
+                            </ul>
+                            <div class="text-4xl font-black text-green-400">Worth ₹2,79,500</div>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Call to Action -->
+                <div class="space-y-8">
+                    <h3 class="text-3xl font-bold text-white">Haven't bought your ticket yet?</h3>
+                    <p class="text-white/60 max-w-3xl mx-auto text-xl font-light leading-relaxed">
+                        Don't miss out on this incredible opportunity! Get your lucky draw ticket for just ₹99 and join thousands of participants competing for this amazing prize.
+                    </p>
+                    
+                    <div class="flex flex-col sm:flex-row gap-6 justify-center">
+                        <a href="buy.html" class="glass premium-glow px-12 py-5 rounded-2xl font-bold text-xl transition-all hover-lift">
+                            <span class="text-gradient">Buy Ticket Now - ₹99</span>
+                        </a>
+                        <button onclick="checkTicket()" class="glass px-12 py-5 rounded-2xl font-bold text-xl transition-all hover-lift border border-white/20">
+                            Check My Ticket
+                        </button>
+                    </div>
+                </div>
+                
+                <!-- Countdown Timer -->
+                <div class="mt-20 premium-card rounded-3xl p-12">
+                    <h3 class="text-3xl font-bold mb-8 text-gradient">Draw Announcement In:</h3>
+                    <div id="countdown" class="grid grid-cols-4 gap-6 max-w-2xl mx-auto">
+                        <div class="text-center">
+                            <div id="days" class="text-5xl font-black gold-accent mb-2">02</div>
+                            <div class="text-white/60 font-light">Days</div>
+                        </div>
+                        <div class="text-center">
+                            <div id="hours" class="text-5xl font-black gold-accent mb-2">00</div>
+                            <div class="text-white/60 font-light">Hours</div>
+                        </div>
+                        <div class="text-center">
+                            <div id="minutes" class="text-5xl font-black gold-accent mb-2">00</div>
+                            <div class="text-white/60 font-light">Minutes</div>
+                        </div>
+                        <div class="text-center">
+                            <div id="seconds" class="text-5xl font-black gold-accent mb-2">00</div>
+                            <div class="text-white/60 font-light">Seconds</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Ticket Check Modal -->
+    <div id="ticketModal" class="hidden fixed inset-0 bg-black/80 backdrop-blur-sm z-50 flex items-center justify-center p-4">
+        <div class="premium-card rounded-3xl p-10 max-w-md w-full">
+            <h3 class="text-3xl font-bold mb-6 text-gradient">Check Your Ticket</h3>
+            <p class="text-white/60 mb-8 font-light">Enter your ticket ID to verify your entry</p>
+            
+            <div class="space-y-6">
+                <input type="text" id="ticketInput" placeholder="Enter Ticket ID (e.g., TKT12345)" 
+                       class="w-full px-6 py-4 bg-black/50 border border-white/20 rounded-2xl text-white placeholder-white/40 focus:border-gold-accent focus:outline-none transition-all text-lg">
+                
+                <div class="flex gap-4">
+                    <button onclick="verifyTicket()" class="flex-1 glass premium-glow py-4 rounded-2xl font-bold text-gradient hover:bg-white/10 transition-all">
+                        Verify
+                    </button>
+                    <button onclick="closeTicketModal()" class="flex-1 glass py-4 rounded-2xl font-bold text-white/80 hover:bg-white/10 transition-all">
+                        Cancel
+                    </button>
+                </div>
+            </div>
+            
+            <div id="ticketResult" class="hidden mt-6 p-4 rounded-2xl"></div>
+        </div>
+    </div>
+
+    <script>
+        // Countdown Timer
+        function updateCountdown() {
+            // Set target date to December 31st of current year
+            const targetDate = new Date();
+            targetDate.setMonth(11); // December (0-indexed)
+            targetDate.setDate(31);
+            targetDate.setHours(23, 59, 59, 999);
+            
+            const now = new Date().getTime();
+            const distance = targetDate.getTime() - now;
+            
+            const days = Math.floor(distance / (1000 * 60 * 60 * 24));
+            const hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+            const minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
+            const seconds = Math.floor((distance % (1000 * 60)) / 1000);
+            
+            document.getElementById('days').textContent = days.toString().padStart(2, '0');
+            document.getElementById('hours').textContent = hours.toString().padStart(2, '0');
+            document.getElementById('minutes').textContent = minutes.toString().padStart(2, '0');
+            document.getElementById('seconds').textContent = seconds.toString().padStart(2, '0');
+            
+            if (distance < 0) {
+                document.getElementById('countdown').innerHTML = '<div class="text-3xl font-bold gold-accent">Draw Completed!</div>';
+            }
+        }
+        
+        // Update countdown every second
+        setInterval(updateCountdown, 1000);
+        updateCountdown();
+        
+        // Check for winner on page load
+        checkWinner();
+        
+        // Check for winner every 30 seconds
+        setInterval(checkWinner, 30000);
+        
+        // Ticket verification functions
+        function checkTicket() {
+            document.getElementById('ticketModal').classList.remove('hidden');
+            document.getElementById('ticketInput').focus();
+        }
+        
+        function closeTicketModal() {
+            document.getElementById('ticketModal').classList.add('hidden');
+            document.getElementById('ticketInput').value = '';
+            document.getElementById('ticketResult').classList.add('hidden');
+        }
+        
+        async function verifyTicket() {
+            const ticketId = document.getElementById('ticketInput').value.trim();
+            const resultDiv = document.getElementById('ticketResult');
+            
+            if (!ticketId) {
+                showTicketResult('Please enter a ticket ID', 'error');
+                return;
+            }
+            
+            if (!ticketId.match(/^TKT[A-Z0-9]{5}$/)) {
+                showTicketResult('Invalid ticket ID format. Please check and try again.', 'error');
+                return;
+            }
+            
+            try {
+                showTicketResult('Verifying ticket...', 'info');
+                
+                const response = await fetch(`http://localhost:3000/verify-ticket/${ticketId}`);
+                const data = await response.json();
+                
+                if (data.success) {
+                    showTicketResult(`Ticket ${ticketId} is valid! Purchased by ${data.ticket.name} on ${new Date(data.ticket.purchase_date).toLocaleDateString()}`, 'success');
+                } else {
+                    showTicketResult('Ticket not found. Please check your ticket ID.', 'error');
+                }
+            } catch (error) {
+                showTicketResult('Error verifying ticket. Please try again.', 'error');
+            }
+        }
+        
+        function showTicketResult(message, type) {
+            const resultDiv = document.getElementById('ticketResult');
+            let className = 'mt-6 p-4 rounded-2xl text-sm ';
+            
+            if (type === 'success') {
+                className += 'bg-green-900/30 border border-green-600/30 text-green-400';
+            } else if (type === 'info') {
+                className += 'bg-blue-900/30 border border-blue-600/30 text-blue-400';
+            } else {
+                className += 'bg-red-900/30 border border-red-600/30 text-red-400';
+            }
+            
+            resultDiv.className = className;
+            resultDiv.textContent = message;
+            resultDiv.classList.remove('hidden');
+        }
+        
+        // Enter key support for ticket input
+        document.getElementById('ticketInput').addEventListener('keypress', function(e) {
+            if (e.key === 'Enter') {
+                verifyTicket();
+            }
+        });
+        
+        // Close modal on escape key
+        document.addEventListener('keydown', function(e) {
+            if (e.key === 'Escape') {
+                closeTicketModal();
+            }
+        });
+        
+        // Check for announced winner
+        async function checkWinner() {
+            try {
+                const response = await fetch('http://localhost:3000/current-winner');
+                const data = await response.json();
+                
+                if (data.success && data.winner) {
+                    showWinner(data.winner);
+                } else {
+                    showNoWinner();
+                }
+            } catch (error) {
+                console.error('Error checking winner:', error);
+            }
+        }
+        
+        function showWinner(winner) {
+            // Update main heading
+            const mainHeading = document.querySelector('h1');
+            if (mainHeading) {
+                mainHeading.innerHTML = '🏆 Winner Announced!';
+                mainHeading.className = 'text-6xl lg:text-8xl font-black mb-8 bg-gradient-to-r from-green-400 to-yellow-400 bg-clip-text text-transparent';
+            }
+            
+            // Update description
+            const description = document.querySelector('.text-2xl.lg\\:text-3xl');
+            if (description) {
+                description.innerHTML = `
+                    <div class="premium-card rounded-3xl p-10 mb-12 premium-glow">
+                        <div class="text-4xl font-black text-green-400 mb-6">🎉 Congratulations!</div>
+                        <div class="text-3xl font-bold text-white mb-4">${winner.name}</div>
+                        <div class="text-xl gold-accent mb-6 font-mono">${winner.ticket_number}</div>
+                        <div class="text-white/70 text-lg">Winner of the Harley-Davidson X440 worth ₹2,79,500!</div>
+                        <div class="text-white/40 mt-6">Announced on: ${new Date(winner.announced_date).toLocaleString()}</div>
+                    </div>
+                `;
+            }
+        }
+        
+        function showNoWinner() {
+            // Keep original content if no winner
+            const mainHeading = document.querySelector('h1');
+            if (mainHeading && mainHeading.textContent.includes('Winner Announced')) {
+                mainHeading.innerHTML = 'Winner Coming Soon';
+                mainHeading.className = 'text-6xl lg:text-8xl font-black mb-8 text-gradient';
+                
+                const description = document.querySelector('.text-2xl.lg\\:text-3xl');
+                if (description) {
+                    description.innerHTML = 'The lucky draw is currently in progress. We\'re preparing to announce the winner of the stunning Harley-Davidson X440!';
+                }
+            }
+        }
+    </script>
+</body>
+</html>

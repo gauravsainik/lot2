@@ -1,0 +1,681 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>DreamRide Lucky Draw - Win Your Dream Ride</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=SF+Pro+Display:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+    <style>
+        * { font-family: 'SF Pro Display', -apple-system, BlinkMacSystemFont, sans-serif; }
+        
+        /* Dark Theme (Default) */
+        :root {
+            --bg-primary: #000;
+            --bg-secondary: #1a1a1a;
+            --text-primary: #fff;
+            --text-secondary: rgba(255,255,255,0.7);
+            --text-tertiary: rgba(255,255,255,0.4);
+            --glass-bg: rgba(255,255,255,0.05);
+            --glass-border: rgba(255,255,255,0.1);
+            --card-bg: linear-gradient(145deg, rgba(26,26,26,0.8) 0%, rgba(0,0,0,0.9) 100%);
+            --nav-bg: rgba(0,0,0,0.8);
+        }
+        
+        /* Light Theme */
+        [data-theme="light"] {
+            --bg-primary: #f8f9fa;
+            --bg-secondary: #fff;
+            --text-primary: #1a1a1a;
+            --text-secondary: rgba(26,26,26,0.7);
+            --text-tertiary: rgba(26,26,26,0.5);
+            --glass-bg: rgba(255,255,255,0.8);
+            --glass-border: rgba(0,0,0,0.1);
+            --card-bg: linear-gradient(145deg, rgba(255,255,255,0.9) 0%, rgba(248,249,250,0.8) 100%);
+            --nav-bg: rgba(255,255,255,0.9);
+        }
+        
+        body { background: var(--bg-primary); color: var(--text-primary); overflow-x: hidden; transition: all 0.3s ease; }
+        .hero-gradient { background: radial-gradient(ellipse at center, var(--bg-secondary) 0%, var(--bg-primary) 70%); }
+        .glass { backdrop-filter: blur(20px); background: var(--glass-bg); border: 1px solid var(--glass-border); }
+        .premium-glow { box-shadow: 0 0 80px rgba(255,215,0,0.15), 0 0 40px rgba(255,255,255,0.1); }
+        .text-gradient { background: linear-gradient(135deg, #fff 0%, #ffd700 50%, #fff 100%); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
+        .fade-up { animation: fadeUp 1.2s cubic-bezier(0.16, 1, 0.3, 1); }
+        .fade-in-delay { animation: fadeUp 1.2s cubic-bezier(0.16, 1, 0.3, 1) 0.3s both; }
+        @keyframes fadeUp { from { opacity: 0; transform: translateY(60px); } to { opacity: 1; transform: translateY(0); } }
+        .admin-panel, .customer-panel { transform: translateX(100%); transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1); }
+        .admin-panel.open, .customer-panel.open { transform: translateX(0); }
+        .floating-nav { backdrop-filter: blur(40px); background: var(--nav-bg); }
+        .premium-card { background: var(--card-bg); backdrop-filter: blur(20px); border: 1px solid var(--glass-border); }
+        .gold-accent { color: #ffd700; }
+        .hover-lift { transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1); }
+        .hover-lift:hover { transform: translateY(-8px); box-shadow: 0 20px 40px rgba(0,0,0,0.3); }
+        .nav-link { color: var(--text-secondary); }
+        .nav-link:hover { color: var(--text-primary); }
+        .hover-btn:hover { background: var(--glass-bg); }
+        [data-theme="light"] .text-gradient { background: linear-gradient(135deg, #1a1a1a 0%, #ffd700 50%, #1a1a1a 100%); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
+    </style>
+</head>
+<body class="text-white">
+    <!-- Navigation -->
+    <nav class="fixed top-0 w-full z-50 floating-nav border-b border-white/10">
+        <div class="max-w-7xl mx-auto px-6 lg:px-8">
+            <div class="flex justify-between items-center h-20">
+                <div class="text-3xl font-black text-gradient tracking-tight">DreamRide</div>
+                <div class="flex items-center space-x-6">
+                    <a href="#home" class="nav-link transition-all duration-300 font-medium">Home</a>
+                    <a href="fairness.html" class="nav-link transition-all duration-300 font-medium">Fairness</a>
+                    <a href="result.html" class="nav-link transition-all duration-300 font-medium">Results</a>
+                    <button onclick="toggleTheme()" class="glass px-3 py-2 rounded-full text-xs font-medium hover-btn transition-all duration-300">
+                        🌙
+                    </button>
+                    <button onclick="toggleCustomerLogin()" class="glass px-4 py-2 rounded-full text-sm font-medium hover-btn transition-all duration-300">
+                        Login
+                    </button>
+                    <button onclick="toggleAdmin()" class="glass px-4 py-2 rounded-full text-sm font-medium hover-btn transition-all duration-300">
+                        Admin
+                    </button>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section id="home" class="hero-gradient min-h-screen flex items-center relative">
+        <div class="absolute inset-0 bg-gradient-to-b from-transparent via-black/20 to-black/60"></div>
+        <div class="max-w-7xl mx-auto px-6 lg:px-8 relative z-20">
+            <div class="grid lg:grid-cols-2 gap-16 items-center">
+                <div class="space-y-10 fade-up">
+                    <div class="space-y-6">
+                        <h1 class="text-6xl lg:text-8xl font-black leading-[0.9] tracking-tight">
+                            Win Your
+                            <span class="text-gradient block">Dream Ride</span>
+                        </h1>
+                        <p class="text-xl lg:text-2xl text-white/70 max-w-xl leading-relaxed font-light">
+                            Enter our exclusive lucky draw for just ₹99 and stand a chance to win the legendary Harley-Davidson X440 worth ₹2,79,500.
+                        </p>
+                    </div>
+                    <div class="flex flex-col sm:flex-row gap-6">
+                        <a href="buy.html" class="glass premium-glow px-10 py-5 rounded-2xl font-semibold text-xl transition-all hover-lift text-center group">
+                            <span class="text-gradient">Buy Ticket - ₹99</span>
+                        </a>
+                        <a href="result.html" class="glass px-10 py-5 rounded-2xl font-semibold text-xl transition-all hover-lift text-center border border-white/20">
+                            View Results
+                        </a>
+                    </div>
+                </div>
+                <div class="relative fade-in-delay">
+                    <div class="premium-glow rounded-3xl overflow-hidden">
+                        <img src="https://images.unsplash.com/photo-1558618666-fcd25c85cd64?w=900&h=700&fit=crop" 
+                             alt="Harley-Davidson X440" 
+                             class="w-full h-auto">
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Bike Variants Section -->
+    <section class="py-32 relative">
+        <div class="max-w-7xl mx-auto px-6 lg:px-8">
+            <div class="text-center mb-20">
+                <h2 class="text-5xl lg:text-6xl font-black mb-6 text-gradient">Harley-Davidson X440</h2>
+                <p class="text-2xl text-white/60 font-light">Available in stunning color variants</p>
+            </div>
+            
+            <div class="grid md:grid-cols-2 lg:grid-cols-4 gap-8">
+                <div class="premium-card rounded-3xl p-8 hover-lift group">
+                    <div class="rounded-2xl overflow-hidden mb-6">
+                        <img src="https://images.unsplash.com/photo-1558618047-3c8c76ca7d13?w=400&h=300&fit=crop" 
+                             alt="Black X440" class="w-full h-56 object-cover group-hover:scale-110 transition-transform duration-700">
+                    </div>
+                    <h3 class="text-2xl font-bold mb-3 text-white">Midnight Black</h3>
+                    <p class="text-white/60 font-light">Classic stealth elegance</p>
+                </div>
+                
+                <div class="premium-card rounded-3xl p-8 hover-lift group">
+                    <div class="rounded-2xl overflow-hidden mb-6">
+                        <img src="https://images.unsplash.com/photo-1568605117036-5fe5e7bab0b7?w=400&h=300&fit=crop" 
+                             alt="Red X440" class="w-full h-56 object-cover group-hover:scale-110 transition-transform duration-700">
+                    </div>
+                    <h3 class="text-2xl font-bold mb-3 text-white">Racing Red</h3>
+                    <p class="text-white/60 font-light">Bold and aggressive</p>
+                </div>
+                
+                <div class="premium-card rounded-3xl p-8 hover-lift group">
+                    <div class="rounded-2xl overflow-hidden mb-6">
+                        <img src="https://images.unsplash.com/photo-1571068316344-75bc76f77890?w=400&h=300&fit=crop" 
+                             alt="Blue X440" class="w-full h-56 object-cover group-hover:scale-110 transition-transform duration-700">
+                    </div>
+                    <h3 class="text-2xl font-bold mb-3 text-white">Ocean Blue</h3>
+                    <p class="text-white/60 font-light">Deep and mysterious</p>
+                </div>
+                
+                <div class="premium-card rounded-3xl p-8 hover-lift group">
+                    <div class="rounded-2xl overflow-hidden mb-6">
+                        <img src="https://images.unsplash.com/photo-1558618047-3c8c76ca7d13?w=400&h=300&fit=crop&sat=-100" 
+                             alt="Silver X440" class="w-full h-56 object-cover group-hover:scale-110 transition-transform duration-700">
+                    </div>
+                    <h3 class="text-2xl font-bold mb-3 text-white">Silver Storm</h3>
+                    <p class="text-white/60 font-light">Sophisticated shine</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- How It Works -->
+    <section class="py-32 relative">
+        <div class="max-w-7xl mx-auto px-6 lg:px-8">
+            <div class="text-center mb-20">
+                <h2 class="text-5xl lg:text-6xl font-black mb-6 text-gradient">How It Works</h2>
+                <p class="text-2xl text-white/60 font-light">Simple steps to win your dream ride</p>
+            </div>
+            
+            <div class="grid md:grid-cols-3 gap-12">
+                <div class="text-center space-y-8 group">
+                    <div class="w-24 h-24 glass premium-glow rounded-3xl flex items-center justify-center mx-auto text-3xl font-black gold-accent group-hover:scale-110 transition-transform duration-300">1</div>
+                    <h3 class="text-3xl font-bold text-white">Buy Ticket</h3>
+                    <p class="text-xl text-white/60 font-light leading-relaxed">Purchase your lucky draw ticket for just ₹99</p>
+                </div>
+                
+                <div class="text-center space-y-8 group">
+                    <div class="w-24 h-24 glass premium-glow rounded-3xl flex items-center justify-center mx-auto text-3xl font-black gold-accent group-hover:scale-110 transition-transform duration-300">2</div>
+                    <h3 class="text-3xl font-bold text-white">Get Ticket ID</h3>
+                    <p class="text-xl text-white/60 font-light leading-relaxed">Receive your unique ticket ID via email</p>
+                </div>
+                
+                <div class="text-center space-y-8 group">
+                    <div class="w-24 h-24 glass premium-glow rounded-3xl flex items-center justify-center mx-auto text-3xl font-black gold-accent group-hover:scale-110 transition-transform duration-300">3</div>
+                    <h3 class="text-3xl font-bold text-white">Win Big</h3>
+                    <p class="text-xl text-white/60 font-light leading-relaxed">Wait for the draw and claim your prize</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- CTA Section -->
+    <section class="py-32 hero-gradient relative">
+        <div class="max-w-5xl mx-auto text-center px-6 lg:px-8">
+            <h2 class="text-6xl lg:text-7xl font-black mb-8 text-gradient">Ready to Win?</h2>
+            <p class="text-2xl text-white/70 mb-12 font-light max-w-3xl mx-auto leading-relaxed">
+                Don't miss your chance to own the legendary Harley-Davidson X440 worth ₹2,79,500
+            </p>
+            <a href="buy.html" class="glass premium-glow px-16 py-6 rounded-3xl font-bold text-2xl transition-all hover-lift inline-block">
+                <span class="text-gradient">Enter Lucky Draw - ₹99</span>
+            </a>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="py-20 border-t border-white/10">
+        <div class="max-w-7xl mx-auto px-6 lg:px-8 text-center">
+            <div class="text-4xl font-black text-gradient mb-6">DreamRide</div>
+            <p class="text-xl text-white/60 mb-8 font-light">Your gateway to luxury rides</p>
+            <p class="text-white/40 font-light">© 2024 DreamRide Lucky Draw. All rights reserved.</p>
+        </div>
+    </footer>
+
+    <!-- Admin Panel -->
+    <div id="adminPanel" class="admin-panel fixed top-0 right-0 w-96 h-full glass border-l border-white/10 z-40 p-8">
+        <div class="flex justify-between items-center mb-8">
+            <h3 class="text-2xl font-bold text-gradient">Admin Portal</h3>
+            <button onclick="toggleAdmin()" class="glass w-10 h-10 rounded-full flex items-center justify-center hover:bg-white/10 transition-all">
+                ✕
+            </button>
+        </div>
+        
+        <!-- Login Form -->
+        <div id="adminLogin" class="space-y-6">
+            <div class="premium-card rounded-2xl p-6">
+                <h4 class="text-lg font-bold mb-6 gold-accent text-center">Admin Login</h4>
+                <div class="space-y-4">
+                    <input type="text" id="adminUsername" placeholder="Username" 
+                           class="w-full px-4 py-3 bg-black/50 border border-white/20 rounded-xl text-white placeholder-white/40 focus:border-gold-accent focus:outline-none">
+                    <input type="password" id="adminPassword" placeholder="Password" 
+                           class="w-full px-4 py-3 bg-black/50 border border-white/20 rounded-xl text-white placeholder-white/40 focus:border-gold-accent focus:outline-none">
+                    <button onclick="adminLogin()" class="w-full glass premium-glow py-3 rounded-xl font-semibold text-gradient hover:bg-white/10 transition-all">
+                        Login
+                    </button>
+                    <div id="loginError" class="hidden text-red-400 text-sm text-center"></div>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Admin Content (Hidden by default) -->
+        <div id="adminContent" class="hidden space-y-8">
+        
+        <div class="space-y-8">
+            <!-- Winner Announcement -->
+            <div class="premium-card rounded-2xl p-6">
+                <h4 class="text-lg font-bold mb-4 gold-accent">Announce Winner</h4>
+                <input type="text" id="adminWinnerTicket" placeholder="Enter ticket number" 
+                       class="w-full px-4 py-3 bg-black/50 border border-white/20 rounded-xl text-white placeholder-white/40 focus:border-gold-accent focus:outline-none mb-4">
+                <button onclick="announceWinner()" class="w-full glass premium-glow py-3 rounded-xl font-semibold text-gradient hover:bg-white/10 transition-all mb-2">
+                    Announce Winner
+                </button>
+                <button onclick="clearWinner()" class="w-full glass py-3 rounded-xl font-semibold text-white/80 hover:bg-white/10 transition-all">
+                    Clear Winner
+                </button>
+                <div id="adminResult" class="hidden mt-4 p-3 rounded-xl text-sm"></div>
+            </div>
+            
+            <!-- Current Winner -->
+            <div class="premium-card rounded-2xl p-6">
+                <h4 class="text-lg font-bold mb-4 gold-accent">Current Winner</h4>
+                <div id="adminCurrentWinner" class="text-white/60 text-sm">Loading...</div>
+            </div>
+            
+            <!-- Stats -->
+            <div class="premium-card rounded-2xl p-6">
+                <h4 class="text-lg font-bold mb-4 gold-accent">Statistics</h4>
+                <div class="space-y-3">
+                    <div class="flex justify-between">
+                        <span class="text-white/60">Total Tickets:</span>
+                        <span id="adminTotalTickets" class="font-bold">0</span>
+                    </div>
+                    <div class="flex justify-between">
+                        <span class="text-white/60">Revenue:</span>
+                        <span id="adminRevenue" class="font-bold gold-accent">₹0</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Logout Button -->
+        <div id="adminLogout" class="hidden mt-8">
+            <button onclick="adminLogout()" class="w-full glass py-3 rounded-xl font-semibold text-white/60 hover:bg-white/10 transition-all">
+                Logout
+            </button>
+        </div>
+    </div>
+    
+    <!-- Customer Panel -->
+    <div id="customerPanel" class="customer-panel fixed top-0 right-0 w-96 h-full glass border-l border-white/10 z-30 p-8">
+        <div class="flex justify-between items-center mb-8">
+            <h3 class="text-2xl font-bold text-gradient">Customer Portal</h3>
+            <button onclick="toggleCustomerLogin()" class="glass w-10 h-10 rounded-full flex items-center justify-center hover-btn transition-all">
+                ✕
+            </button>
+        </div>
+        
+        <!-- Customer Login Form -->
+        <div id="customerLogin" class="space-y-6">
+            <div class="premium-card rounded-2xl p-6">
+                <h4 class="text-lg font-bold mb-6 gold-accent text-center">Customer Login</h4>
+                <div class="space-y-4">
+                    <input type="email" id="customerEmail" placeholder="Email Address" 
+                           class="w-full px-4 py-3 bg-black/50 border border-white/20 rounded-xl placeholder-white/40 focus:border-gold-accent focus:outline-none" style="color: var(--text-primary); background: var(--glass-bg);">
+                    <input type="password" id="customerPassword" placeholder="Password" 
+                           class="w-full px-4 py-3 bg-black/50 border border-white/20 rounded-xl placeholder-white/40 focus:border-gold-accent focus:outline-none" style="color: var(--text-primary); background: var(--glass-bg);">
+                    <button onclick="customerLogin()" class="w-full glass premium-glow py-3 rounded-xl font-semibold text-gradient hover-btn transition-all">
+                        Login
+                    </button>
+                    <button onclick="showCustomerRegister()" class="w-full glass py-3 rounded-xl font-semibold hover-btn transition-all" style="color: var(--text-secondary);">
+                        Create Account
+                    </button>
+                    <div id="customerLoginError" class="hidden text-red-400 text-sm text-center"></div>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Customer Register Form -->
+        <div id="customerRegister" class="hidden space-y-6">
+            <div class="premium-card rounded-2xl p-6">
+                <h4 class="text-lg font-bold mb-6 gold-accent text-center">Create Account</h4>
+                <div class="space-y-4">
+                    <input type="text" id="registerName" placeholder="Full Name" 
+                           class="w-full px-4 py-3 rounded-xl border focus:border-gold-accent focus:outline-none" style="color: var(--text-primary); background: var(--glass-bg); border-color: var(--glass-border);">
+                    <input type="email" id="registerEmail" placeholder="Email Address" 
+                           class="w-full px-4 py-3 rounded-xl border focus:border-gold-accent focus:outline-none" style="color: var(--text-primary); background: var(--glass-bg); border-color: var(--glass-border);">
+                    <input type="tel" id="registerPhone" placeholder="Phone Number" 
+                           class="w-full px-4 py-3 rounded-xl border focus:border-gold-accent focus:outline-none" style="color: var(--text-primary); background: var(--glass-bg); border-color: var(--glass-border);">
+                    <input type="password" id="registerPassword" placeholder="Password" 
+                           class="w-full px-4 py-3 rounded-xl border focus:border-gold-accent focus:outline-none" style="color: var(--text-primary); background: var(--glass-bg); border-color: var(--glass-border);">
+                    <button onclick="customerRegister()" class="w-full glass premium-glow py-3 rounded-xl font-semibold text-gradient hover-btn transition-all">
+                        Register
+                    </button>
+                    <button onclick="showCustomerLogin()" class="w-full glass py-3 rounded-xl font-semibold hover-btn transition-all" style="color: var(--text-secondary);">
+                        Back to Login
+                    </button>
+                    <div id="customerRegisterError" class="hidden text-red-400 text-sm text-center"></div>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Customer Dashboard -->
+        <div id="customerDashboard" class="hidden space-y-6">
+            <div class="premium-card rounded-2xl p-6">
+                <h4 class="text-lg font-bold mb-4 gold-accent">Welcome Back!</h4>
+                <div id="customerInfo" class="space-y-3 text-sm" style="color: var(--text-secondary);"></div>
+            </div>
+            
+            <div class="premium-card rounded-2xl p-6">
+                <h4 class="text-lg font-bold mb-4 gold-accent">My Tickets</h4>
+                <div id="customerTickets" class="space-y-2 text-sm" style="color: var(--text-secondary);">No tickets purchased yet</div>
+            </div>
+            
+            <button onclick="customerLogout()" class="w-full glass py-3 rounded-xl font-semibold hover-btn transition-all" style="color: var(--text-tertiary);">
+                Logout
+            </button>
+        </div>
+    </div>
+    
+    <script>
+        const API_BASE_URL = 'http://localhost:3000';
+        
+        // Smooth scrolling
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                document.querySelector(this.getAttribute('href')).scrollIntoView({
+                    behavior: 'smooth'
+                });
+            });
+        });
+
+        // Navigation scroll effect
+        window.addEventListener('scroll', () => {
+            const nav = document.querySelector('nav');
+            if (window.scrollY > 50) {
+                nav.style.background = 'rgba(0,0,0,0.95)';
+            } else {
+                nav.style.background = 'rgba(0,0,0,0.8)';
+            }
+        });
+        
+        // Admin panel toggle
+        function toggleAdmin() {
+            const panel = document.getElementById('adminPanel');
+            panel.classList.toggle('open');
+            if (panel.classList.contains('open')) {
+                checkAdminAuth();
+            }
+        }
+        
+        // Check admin authentication
+        function checkAdminAuth() {
+            const isLoggedIn = localStorage.getItem('adminLoggedIn') === 'true';
+            const loginForm = document.getElementById('adminLogin');
+            const adminContent = document.getElementById('adminContent');
+            const logoutBtn = document.getElementById('adminLogout');
+            
+            if (isLoggedIn) {
+                loginForm.classList.add('hidden');
+                adminContent.classList.remove('hidden');
+                logoutBtn.classList.remove('hidden');
+                loadAdminData();
+            } else {
+                loginForm.classList.remove('hidden');
+                adminContent.classList.add('hidden');
+                logoutBtn.classList.add('hidden');
+            }
+        }
+        
+        // Admin login
+        function adminLogin() {
+            const username = document.getElementById('adminUsername').value.trim();
+            const password = document.getElementById('adminPassword').value.trim();
+            const errorDiv = document.getElementById('loginError');
+            
+            // Simple credentials (in production, use proper authentication)
+            if (username === 'admin' && password === 'dreamride2024') {
+                localStorage.setItem('adminLoggedIn', 'true');
+                document.getElementById('adminUsername').value = '';
+                document.getElementById('adminPassword').value = '';
+                errorDiv.classList.add('hidden');
+                checkAdminAuth();
+            } else {
+                errorDiv.textContent = 'Invalid username or password';
+                errorDiv.classList.remove('hidden');
+                setTimeout(() => {
+                    errorDiv.classList.add('hidden');
+                }, 3000);
+            }
+        }
+        
+        // Admin logout
+        function adminLogout() {
+            localStorage.removeItem('adminLoggedIn');
+            checkAdminAuth();
+        }
+        
+        // Theme toggle
+        function toggleTheme() {
+            const body = document.body;
+            const currentTheme = body.getAttribute('data-theme');
+            const newTheme = currentTheme === 'light' ? 'dark' : 'light';
+            
+            body.setAttribute('data-theme', newTheme);
+            localStorage.setItem('theme', newTheme);
+            
+            // Update theme button
+            const themeBtn = document.querySelector('button[onclick="toggleTheme()"]');
+            themeBtn.textContent = newTheme === 'light' ? '🌞' : '🌙';
+        }
+        
+        // Customer login panel toggle
+        function toggleCustomerLogin() {
+            const panel = document.getElementById('customerPanel');
+            panel.classList.toggle('open');
+        }
+        
+        // Show customer login form
+        function showCustomerLogin() {
+            document.getElementById('customerLogin').classList.remove('hidden');
+            document.getElementById('customerRegister').classList.add('hidden');
+        }
+        
+        // Show customer register form
+        function showCustomerRegister() {
+            document.getElementById('customerLogin').classList.add('hidden');
+            document.getElementById('customerRegister').classList.remove('hidden');
+        }
+        
+        // Customer login
+        function customerLogin() {
+            const email = document.getElementById('customerEmail').value.trim();
+            const password = document.getElementById('customerPassword').value.trim();
+            const errorDiv = document.getElementById('customerLoginError');
+            
+            if (!email || !password) {
+                errorDiv.textContent = 'Please fill in all fields';
+                errorDiv.classList.remove('hidden');
+                return;
+            }
+            
+            // Simple validation (in production, use proper authentication)
+            const customers = JSON.parse(localStorage.getItem('customers') || '[]');
+            const customer = customers.find(c => c.email === email && c.password === password);
+            
+            if (customer) {
+                localStorage.setItem('customerLoggedIn', JSON.stringify(customer));
+                showCustomerDashboard(customer);
+                errorDiv.classList.add('hidden');
+            } else {
+                errorDiv.textContent = 'Invalid email or password';
+                errorDiv.classList.remove('hidden');
+            }
+        }
+        
+        // Customer register
+        function customerRegister() {
+            const name = document.getElementById('registerName').value.trim();
+            const email = document.getElementById('registerEmail').value.trim();
+            const phone = document.getElementById('registerPhone').value.trim();
+            const password = document.getElementById('registerPassword').value.trim();
+            const errorDiv = document.getElementById('customerRegisterError');
+            
+            if (!name || !email || !phone || !password) {
+                errorDiv.textContent = 'Please fill in all fields';
+                errorDiv.classList.remove('hidden');
+                return;
+            }
+            
+            const customers = JSON.parse(localStorage.getItem('customers') || '[]');
+            
+            if (customers.find(c => c.email === email)) {
+                errorDiv.textContent = 'Email already registered';
+                errorDiv.classList.remove('hidden');
+                return;
+            }
+            
+            const newCustomer = { name, email, phone, password, tickets: [] };
+            customers.push(newCustomer);
+            localStorage.setItem('customers', JSON.stringify(customers));
+            
+            localStorage.setItem('customerLoggedIn', JSON.stringify(newCustomer));
+            showCustomerDashboard(newCustomer);
+            errorDiv.classList.add('hidden');
+        }
+        
+        // Show customer dashboard
+        function showCustomerDashboard(customer) {
+            document.getElementById('customerLogin').classList.add('hidden');
+            document.getElementById('customerRegister').classList.add('hidden');
+            document.getElementById('customerDashboard').classList.remove('hidden');
+            
+            document.getElementById('customerInfo').innerHTML = `
+                <div><strong>Name:</strong> ${customer.name}</div>
+                <div><strong>Email:</strong> ${customer.email}</div>
+                <div><strong>Phone:</strong> ${customer.phone}</div>
+            `;
+            
+            const ticketsHtml = customer.tickets.length > 0 
+                ? customer.tickets.map(t => `<div class="font-mono text-gold-accent">${t}</div>`).join('')
+                : 'No tickets purchased yet';
+            document.getElementById('customerTickets').innerHTML = ticketsHtml;
+        }
+        
+        // Customer logout
+        function customerLogout() {
+            localStorage.removeItem('customerLoggedIn');
+            showCustomerLogin();
+            document.getElementById('customerDashboard').classList.add('hidden');
+            toggleCustomerLogin();
+        }
+        
+        // Initialize theme and customer state
+        document.addEventListener('DOMContentLoaded', function() {
+            // Load theme
+            const savedTheme = localStorage.getItem('theme') || 'dark';
+            document.body.setAttribute('data-theme', savedTheme);
+            const themeBtn = document.querySelector('button[onclick="toggleTheme()"]');
+            themeBtn.textContent = savedTheme === 'light' ? '🌞' : '🌙';
+            
+            // Check customer login
+            const customer = JSON.parse(localStorage.getItem('customerLoggedIn') || 'null');
+            if (customer) {
+                showCustomerDashboard(customer);
+            }
+            
+            // Enter key support
+            document.getElementById('adminPassword').addEventListener('keypress', function(e) {
+                if (e.key === 'Enter') adminLogin();
+            });
+            document.getElementById('customerPassword').addEventListener('keypress', function(e) {
+                if (e.key === 'Enter') customerLogin();
+            });
+            document.getElementById('registerPassword').addEventListener('keypress', function(e) {
+                if (e.key === 'Enter') customerRegister();
+            });
+        });
+        
+        // Load admin data
+        async function loadAdminData() {
+            try {
+                const [statsRes, winnerRes] = await Promise.all([
+                    fetch(`${API_BASE_URL}/stats`),
+                    fetch(`${API_BASE_URL}/current-winner`)
+                ]);
+                
+                const stats = await statsRes.json();
+                const winner = await winnerRes.json();
+                
+                if (stats.success) {
+                    document.getElementById('adminTotalTickets').textContent = stats.total_tickets;
+                    document.getElementById('adminRevenue').textContent = `₹${stats.total_revenue.toLocaleString()}`;
+                }
+                
+                const winnerDiv = document.getElementById('adminCurrentWinner');
+                if (winner.success && winner.winner) {
+                    winnerDiv.innerHTML = `<div class="text-green-400 font-bold">${winner.winner.name}</div><div class="text-white/40 text-xs mt-1">${winner.winner.ticket_number}</div>`;
+                } else {
+                    winnerDiv.textContent = 'No winner announced';
+                }
+            } catch (error) {
+                console.error('Error loading admin data:', error);
+            }
+        }
+        
+        // Announce winner
+        async function announceWinner() {
+            const ticketNumber = document.getElementById('adminWinnerTicket').value.trim();
+            
+            if (!ticketNumber) {
+                showAdminResult('Please enter a ticket number', 'error');
+                return;
+            }
+            
+            try {
+                const response = await fetch(`${API_BASE_URL}/announce-winner`, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ 
+                        ticket_number: ticketNumber,
+                        username: 'admin',
+                        password: 'dreamride2024'
+                    })
+                });
+                
+                const data = await response.json();
+                
+                if (data.success) {
+                    showAdminResult(`Winner announced: ${data.winner.name}`, 'success');
+                    document.getElementById('adminWinnerTicket').value = '';
+                    loadAdminData();
+                } else {
+                    showAdminResult(data.message, 'error');
+                }
+            } catch (error) {
+                showAdminResult('Error announcing winner', 'error');
+            }
+        }
+        
+        // Clear winner
+        async function clearWinner() {
+            try {
+                const response = await fetch(`${API_BASE_URL}/clear-winner`, { 
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({
+                        username: 'admin',
+                        password: 'dreamride2024'
+                    })
+                });
+                const data = await response.json();
+                
+                if (data.success) {
+                    showAdminResult('Winner cleared', 'success');
+                    loadAdminData();
+                } else {
+                    showAdminResult('Failed to clear winner', 'error');
+                }
+            } catch (error) {
+                showAdminResult('Error clearing winner', 'error');
+            }
+        }
+        
+        // Show admin result
+        function showAdminResult(message, type) {
+            const resultDiv = document.getElementById('adminResult');
+            resultDiv.className = `mt-4 p-3 rounded-xl text-sm ${type === 'success' ? 'bg-green-900/30 border border-green-600/30 text-green-400' : 'bg-red-900/30 border border-red-600/30 text-red-400'}`;
+            resultDiv.textContent = message;
+            resultDiv.classList.remove('hidden');
+            
+            setTimeout(() => {
+                resultDiv.classList.add('hidden');
+            }, 3000);
+        }
+    </script>
+</body>
+</html>

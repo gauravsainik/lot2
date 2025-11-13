@@ -1,0 +1,262 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Portal - DreamRide Lucky Draw</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <style>
+        body { font-family: 'Inter', sans-serif; }
+        .gradient-bg { background: linear-gradient(135deg, #0f0f0f 0%, #1a1a1a 50%, #0f0f0f 100%); }
+    </style>
+</head>
+<body class="bg-black text-white min-h-screen">
+    <!-- Navigation -->
+    <nav class="bg-black/90 backdrop-blur-md border-b border-gray-800">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between items-center h-16">
+                <div class="text-2xl font-bold text-red-500">DreamRide Admin</div>
+                <div class="space-x-6">
+                    <a href="index.html" class="hover:text-red-400 transition-colors">Home</a>
+                    <a href="result.html" class="hover:text-red-400 transition-colors">Results</a>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Main Content -->
+    <div class="gradient-bg min-h-screen py-20">
+        <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
+            
+            <!-- Winner Announcement Section -->
+            <div class="bg-gray-900 rounded-2xl p-8 mb-8 border border-gray-800">
+                <h2 class="text-3xl font-bold mb-6 text-center">Announce Winner</h2>
+                
+                <div class="max-w-md mx-auto space-y-6">
+                    <div>
+                        <label for="winnerTicket" class="block text-sm font-medium mb-2">Winner Ticket Number</label>
+                        <input type="text" id="winnerTicket" placeholder="Enter ticket number (e.g., TKT12345)"
+                               class="w-full px-4 py-3 bg-black border border-gray-700 rounded-lg focus:border-red-500 focus:outline-none transition-colors">
+                    </div>
+                    
+                    <button onclick="announceWinner()" id="announceBtn"
+                            class="w-full bg-red-600 hover:bg-red-700 py-3 rounded-lg font-semibold text-lg transition-all">
+                        Announce Winner
+                    </button>
+                    
+                    <button onclick="clearWinner()" 
+                            class="w-full border border-gray-600 hover:border-red-500 py-3 rounded-lg font-semibold transition-all">
+                        Clear Winner
+                    </button>
+                </div>
+                
+                <div id="announceResult" class="hidden mt-6 p-4 rounded-lg text-center"></div>
+            </div>
+
+            <!-- Current Winner Display -->
+            <div class="bg-gray-900 rounded-2xl p-8 mb-8 border border-gray-800">
+                <h3 class="text-2xl font-bold mb-4 text-center">Current Winner Status</h3>
+                <div id="currentWinner" class="text-center text-gray-400">Loading...</div>
+            </div>
+
+            <!-- Statistics -->
+            <div class="grid md:grid-cols-3 gap-6 mb-8">
+                <div class="bg-gray-900 rounded-2xl p-6 border border-gray-800 text-center">
+                    <div id="totalTickets" class="text-3xl font-bold text-blue-500 mb-2">0</div>
+                    <div class="text-gray-400">Total Tickets</div>
+                </div>
+                
+                <div class="bg-gray-900 rounded-2xl p-6 border border-gray-800 text-center">
+                    <div id="totalRevenue" class="text-3xl font-bold text-green-500 mb-2">₹0</div>
+                    <div class="text-gray-400">Total Revenue</div>
+                </div>
+                
+                <div class="bg-gray-900 rounded-2xl p-6 border border-gray-800 text-center">
+                    <div class="text-3xl font-bold text-yellow-500 mb-2">₹2,79,500</div>
+                    <div class="text-gray-400">Prize Value</div>
+                </div>
+            </div>
+
+            <!-- Recent Tickets -->
+            <div class="bg-gray-900 rounded-2xl p-8 border border-gray-800">
+                <h3 class="text-2xl font-bold mb-6">Recent Tickets</h3>
+                <div class="overflow-x-auto">
+                    <table class="w-full text-sm">
+                        <thead>
+                            <tr class="border-b border-gray-700">
+                                <th class="text-left py-3 px-4">Ticket ID</th>
+                                <th class="text-left py-3 px-4">Name</th>
+                                <th class="text-left py-3 px-4">Email</th>
+                                <th class="text-left py-3 px-4">Mobile</th>
+                                <th class="text-left py-3 px-4">Date</th>
+                            </tr>
+                        </thead>
+                        <tbody id="ticketsTable">
+                            <tr><td colspan="5" class="text-center py-4 text-gray-400">Loading...</td></tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        const API_BASE_URL = 'http://localhost:3000';
+
+        // Load initial data
+        document.addEventListener('DOMContentLoaded', function() {
+            loadStats();
+            loadTickets();
+            loadCurrentWinner();
+        });
+
+        // Announce winner
+        async function announceWinner() {
+            const ticketNumber = document.getElementById('winnerTicket').value.trim();
+            
+            if (!ticketNumber) {
+                showResult('Please enter a ticket number', 'error');
+                return;
+            }
+            
+            if (!ticketNumber.match(/^TKT[A-Z0-9]{5}$/)) {
+                showResult('Invalid ticket format. Use format: TKTxxxxx', 'error');
+                return;
+            }
+            
+            try {
+                const response = await fetch(`${API_BASE_URL}/announce-winner`, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ ticket_number: ticketNumber })
+                });
+                
+                const data = await response.json();
+                
+                if (data.success) {
+                    showResult(`Winner announced successfully! ${data.winner.name} wins the Harley-Davidson X440!`, 'success');
+                    loadCurrentWinner();
+                    document.getElementById('winnerTicket').value = '';
+                } else {
+                    showResult(data.message || 'Failed to announce winner', 'error');
+                }
+            } catch (error) {
+                showResult('Error announcing winner', 'error');
+            }
+        }
+
+        // Clear winner
+        async function clearWinner() {
+            try {
+                const response = await fetch(`${API_BASE_URL}/clear-winner`, {
+                    method: 'POST'
+                });
+                
+                const data = await response.json();
+                
+                if (data.success) {
+                    showResult('Winner cleared successfully', 'success');
+                    loadCurrentWinner();
+                } else {
+                    showResult('Failed to clear winner', 'error');
+                }
+            } catch (error) {
+                showResult('Error clearing winner', 'error');
+            }
+        }
+
+        // Load current winner
+        async function loadCurrentWinner() {
+            try {
+                const response = await fetch(`${API_BASE_URL}/current-winner`);
+                const data = await response.json();
+                
+                const winnerDiv = document.getElementById('currentWinner');
+                
+                if (data.success && data.winner) {
+                    winnerDiv.innerHTML = `
+                        <div class="text-green-400 text-xl font-bold">
+                            🏆 Winner: ${data.winner.name}
+                        </div>
+                        <div class="text-gray-300 mt-2">
+                            Ticket: ${data.winner.ticket_number} | Announced: ${new Date(data.winner.announced_date).toLocaleString()}
+                        </div>
+                    `;
+                } else {
+                    winnerDiv.innerHTML = '<div class="text-gray-400">No winner announced yet</div>';
+                }
+            } catch (error) {
+                document.getElementById('currentWinner').innerHTML = '<div class="text-red-400">Error loading winner status</div>';
+            }
+        }
+
+        // Load statistics
+        async function loadStats() {
+            try {
+                const response = await fetch(`${API_BASE_URL}/stats`);
+                const data = await response.json();
+                
+                if (data.success) {
+                    document.getElementById('totalTickets').textContent = data.total_tickets;
+                    document.getElementById('totalRevenue').textContent = `₹${data.total_revenue.toLocaleString()}`;
+                }
+            } catch (error) {
+                console.error('Error loading stats:', error);
+            }
+        }
+
+        // Load recent tickets
+        async function loadTickets() {
+            try {
+                const response = await fetch(`${API_BASE_URL}/tickets`);
+                const data = await response.json();
+                
+                const tbody = document.getElementById('ticketsTable');
+                
+                if (data.success && data.tickets.length > 0) {
+                    tbody.innerHTML = data.tickets.slice(0, 10).map(ticket => `
+                        <tr class="border-b border-gray-800 hover:bg-gray-800">
+                            <td class="py-3 px-4 font-mono text-red-400">${ticket.ticket_number}</td>
+                            <td class="py-3 px-4">${ticket.name}</td>
+                            <td class="py-3 px-4">${ticket.email}</td>
+                            <td class="py-3 px-4">${ticket.mobile}</td>
+                            <td class="py-3 px-4">${new Date(ticket.purchase_date).toLocaleDateString()}</td>
+                        </tr>
+                    `).join('');
+                } else {
+                    tbody.innerHTML = '<tr><td colspan="5" class="text-center py-4 text-gray-400">No tickets found</td></tr>';
+                }
+            } catch (error) {
+                document.getElementById('ticketsTable').innerHTML = '<tr><td colspan="5" class="text-center py-4 text-red-400">Error loading tickets</td></tr>';
+            }
+        }
+
+        // Show result message
+        function showResult(message, type) {
+            const resultDiv = document.getElementById('announceResult');
+            let className = 'mt-6 p-4 rounded-lg text-center ';
+            
+            if (type === 'success') {
+                className += 'bg-green-900 border border-green-600 text-green-200';
+            } else {
+                className += 'bg-red-900 border border-red-600 text-red-200';
+            }
+            
+            resultDiv.className = className;
+            resultDiv.textContent = message;
+            resultDiv.classList.remove('hidden');
+            
+            setTimeout(() => {
+                resultDiv.classList.add('hidden');
+            }, 5000);
+        }
+
+        // Auto-refresh data every 30 seconds
+        setInterval(() => {
+            loadStats();
+            loadCurrentWinner();
+        }, 30000);
+    </script>
+</body>
+</html>
